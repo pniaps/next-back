@@ -29,19 +29,6 @@ class fake_users_create extends Command
      */
     public function handle()
     {
-        if(!User::find(1)?->email == 'pniaps@gmail.com'){
-            DB::table('users')->truncate();
-
-            User::create([
-                'name' => 'Pedro Peña',
-                'email' => 'pniaps@gmail.com',
-                'email_verified_at' => now(),
-                'password' => Hash::make('demo'),
-                'remember_token' => Str::random(10)
-            ]);
-
-        }
-
         User::whereFake(true)->delete();
 
         User::unguard();
