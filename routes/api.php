@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreateUsers;
 use App\Http\Controllers\MetricsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -23,3 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', UserController::class);
 
 Route::get('/metrics', MetricsController::class);
+
+Route::get('/createUsers/{number?}', CreateUsers::class)
+    ->whereNumber('number')
+;
