@@ -15,6 +15,9 @@ git clone https://github.com/pniaps/next-back.git
 # Enter backend folder
 cd next-back
 
+# Install composer dependencies
+composer install --optimize-autoloader
+
 # Create environment file
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 
@@ -43,11 +46,30 @@ Once you have configured your SQLite database, you may run your application's [d
 php artisan migrate
 ```
 
-This backend is configured with `APP_URL` and `FRONTEND_URL` environment variables are set to `http://localhost:5001` and `http://localhost:5000`, respectively.
+This backend is configured with `APP_URL` and `FRONTEND_URL` environment variables are set to `http://localhost:5001` and `http://localhost:5000`, respectively. There is also a variable `SANCTUM_STATEFUL_DOMAINS` configured to be able to authenticate using sessions. If you want to use other hosts or ports you will have to configure this variables.
 
 Once the project is configured, you may serve the Laravel application using the `serve` Artisan command:
 
 ```bash
 # Serve the application...
 php artisan serve --port 5001
+```
+
+## Sending email
+
+If you want to be able to recover your account by mail, yo need to configure the `MAIL_*` settings in `.env` file. By default is configured to use localhost on port 1025, ready to use by https://mailpit.axllent.org/
+
+## Commands
+
+In addition to laravel's built-in commands, you can use the command ´users:create´ to create any number of users between 10 an 2000. Each time you use this command, users will be deleted and regenerated. There is also an API endpoint which calls this command, used by the frontend.
+
+```bash
+# Create 30 users
+php artisan users:create
+
+# Create 100 users
+php artisan users:create --number=100
+
+# Create 50 users by HTTP
+http://localhost:5001/api/createUsers/50
 ```
